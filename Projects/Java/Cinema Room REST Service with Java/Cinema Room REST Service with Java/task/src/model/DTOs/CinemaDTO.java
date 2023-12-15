@@ -7,9 +7,9 @@ import java.util.List;
 public class CinemaDTO {
     private int rows;
     private int columns;
-    private List<Seat> seats;
+    private List<List<Seat>> seats;
 
-    public CinemaDTO(int rows, int columns, List<Seat> seats) {
+    public CinemaDTO(int rows, int columns, List<List<Seat>> seats) {
         this.rows = rows;
         this.columns = columns;
         this.seats = seats;
@@ -23,7 +23,7 @@ public class CinemaDTO {
         return columns;
     }
 
-    public List<Seat> getSeats() {
+    public List<List<Seat>> getSeats() {
         return seats;
     }
 }

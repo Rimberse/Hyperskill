@@ -122,6 +122,9 @@ files:
   - name: src/model/DTOs/CinemaDTO.java
     visible: true
     learner_created: true
+  - name: src/services/CinemaService.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13375#comment
 status: Unchecked
 record: -1
