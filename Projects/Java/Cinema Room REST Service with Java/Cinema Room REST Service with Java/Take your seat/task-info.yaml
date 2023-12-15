@@ -230,6 +230,153 @@ files:
           };
       }
     learner_created: false
+  - name: src/cinema/model/Seat.java
+    visible: true
+    text: |
+      package cinema.model;
+      
+      public class Seat {
+          private final int row;
+          private final int column;
+      //    private boolean isBooked;
+      
+          public Seat(int row, int column) {
+              if (row > 0 && row < 10 && column > 0 && column < 10) {
+                  this.row = row;
+                  this.column = column;
+      //            this.isBooked = false;
+              } else {
+                  throw new IllegalArgumentException("Row and columns values should be numerated from 1 to 9");
+              }
+          }
+      
+      //    public Seat(int row, int column, boolean isBooked) {
+      //        this(row, column);
+      //        this.isBooked = true;
+      //    }
+      
+          public int getRow() {
+              return row;
+          }
+      
+          public int getColumn() {
+              return column;
+          }
+      
+      //    public boolean isBooked() {
+      //        return isBooked;
+      //    }
+      //
+      //    public void book() {
+      //        isBooked = true;
+      //    }
+      //
+      //    public void cancelBooking() {
+      //        isBooked = false;
+      //    }
+      }
+    learner_created: true
+  - name: src/cinema/controllers/MovieTheaterController.java
+    visible: true
+    text: |
+      package cinema.controllers;
+      
+      import cinema.model.DTOs.CinemaDTO;
+      import org.springframework.beans.factory.annotation.Autowired;
+      import org.springframework.web.bind.annotation.GetMapping;
+      import org.springframework.web.bind.annotation.RequestMapping;
+      import org.springframework.web.bind.annotation.RestController;
+      import cinema.services.CinemaService;
+      
+      @RestController
+      @RequestMapping("/seats")
+      public class MovieTheaterController {
+          private final CinemaService cinemaService;
+      
+          @Autowired
+          public MovieTheaterController(CinemaService cinemaService) {
+              this.cinemaService = cinemaService;
+          }
+      
+          @GetMapping
+          public CinemaDTO getSeatsInfo() {
+              System.out.println(cinemaService.getSeatsInfo());
+              return cinemaService.getSeatsInfo();
+          }
+      }
+    learner_created: true
+  - name: src/cinema/model/DTOs/CinemaDTO.java
+    visible: true
+    text: |
+      package cinema.model.DTOs;
+      
+      import cinema.model.Seat;
+      
+      import java.util.List;
+      
+      public class CinemaDTO {
+          private int rows;
+          private int columns;
+      //    private List<List<Seat>> seats;
+          private List<Seat> seats;
+      
+      //    public CinemaDTO(int rows, int columns, List<List<Seat>> seats) {
+          public CinemaDTO(int rows, int columns, List<Seat> seats) {
+              this.rows = rows;
+              this.columns = columns;
+              this.seats = seats;
+          }
+      
+          public int getRows() {
+              return rows;
+          }
+      
+          public int getColumns() {
+              return columns;
+          }
+      
+      //    public List<List<Seat>> getSeats() {
+          public List<Seat> getSeats() {
+              return seats;
+          }
+      }
+    learner_created: true
+  - name: src/cinema/services/CinemaService.java
+    visible: true
+    text: |
+      package cinema.services;
+      
+      import cinema.model.Seat;
+      import cinema.model.DTOs.CinemaDTO;
+      import org.springframework.stereotype.Service;
+      
+      import java.util.ArrayList;
+      import java.util.List;
+      
+      @Service
+      public class CinemaService {
+          public CinemaDTO getSeatsInfo() {
+              int rows = 9;
+              int columns = 9;
+      
+      //        List<List<Seat>> seats = new ArrayList<>();
+              List<Seat> seats = new ArrayList<>();
+      
+              for (int row = 0; row < rows; row++) {
+      //            List<Seat> seatsPerRow = new ArrayList<>();
+      
+                  for (int column = 0; column < columns; column++) {
+      //                seatsPerRow.add(new Seat(row + 1, column + 1));
+                      seats.add(new Seat(row + 1, column + 1));
+                  }
+      
+      //            seats.add(seatsPerRow);
+              }
+      
+              return new CinemaDTO(rows, columns, seats);
+          }
+      }
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13376#comment
 status: Unchecked
 record: -1

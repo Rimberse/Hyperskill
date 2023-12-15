@@ -116,15 +116,21 @@ files:
           jvmArgs '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
       }
     learner_created: false
-  - name: src/model/Seat.java
+  - name: src/cinema/controllers/MovieTheaterController.java
     visible: true
     learner_created: true
-  - name: src/model/DTOs/CinemaDTO.java
+  - name: src/cinema/model/DTOs/CinemaDTO.java
     visible: true
     learner_created: true
-  - name: src/services/CinemaService.java
+  - name: src/cinema/services/CinemaService.java
+    visible: true
+    learner_created: true
+  - name: src/cinema/model/Seat.java
     visible: true
     learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13375#comment
-status: Unchecked
-record: -1
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Fri, 15 Dec 2023 18:21:30 UTC"
+record: 1
