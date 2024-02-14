@@ -1,7 +1,7 @@
-package cinema.services.repository;
+package cinema.model.repository;
 
 import cinema.model.DTOs.SeatDTO;
-import cinema.services.repository.interfaces.SeatRepository;
+import cinema.model.repository.interfaces.SeatRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -14,6 +14,11 @@ public class SeatRepositoryImpl implements SeatRepository {
 
     public SeatRepositoryImpl() {
         seats = new ArrayList<>();
+    }
+
+    @Override
+    public List<SeatDTO> findAll() {
+        return seats;
     }
 
     @Override

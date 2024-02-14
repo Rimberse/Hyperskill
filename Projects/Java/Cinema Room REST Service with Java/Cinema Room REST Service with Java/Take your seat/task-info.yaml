@@ -377,10 +377,13 @@ files:
       //    }
       }
     learner_created: true
-  - name: src/cinema/services/repository/interfaces/SeatRepository.java
+  - name: src/cinema/model/repository/interfaces/SeatRepository.java
     visible: true
     learner_created: true
-  - name: src/cinema/services/repository/SeatRepositoryImpl.java
+  - name: src/cinema/model/repository/SeatRepositoryImpl.java
+    visible: true
+    learner_created: true
+  - name: src/cinema/services/SeatService.java
     visible: true
     learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13376#comment
