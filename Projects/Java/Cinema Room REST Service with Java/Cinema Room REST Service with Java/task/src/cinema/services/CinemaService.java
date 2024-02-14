@@ -1,6 +1,5 @@
 package cinema.services;
 
-import cinema.model.DTOs.Seat;
 import cinema.model.DTOs.CinemaDTO;
 import cinema.model.DTOs.SeatDTO;
 import org.springframework.stereotype.Service;

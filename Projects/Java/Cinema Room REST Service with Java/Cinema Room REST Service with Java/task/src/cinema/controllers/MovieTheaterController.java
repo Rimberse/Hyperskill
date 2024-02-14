@@ -1,7 +1,6 @@
 package cinema.controllers;
 
 import cinema.model.DTOs.CinemaDTO;
-import cinema.model.DTOs.Seat;
 import cinema.model.DTOs.SeatDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
