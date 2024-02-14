@@ -1,23 +1,22 @@
-package model;
+package cinema.model.DTOs;
 
-public class Seat {
+public class SeatDTO {
     private final int row;
     private final int column;
-    private boolean isBooked;
+    private int price;
 
-    public Seat(int row, int column) {
+    public SeatDTO(int row, int column) {
         if (row > 0 && row < 10 && column > 0 && column < 10) {
             this.row = row;
             this.column = column;
-            this.isBooked = false;
         } else {
             throw new IllegalArgumentException("Row and columns values should be numerated from 1 to 9");
         }
     }
 
-    public Seat(int row, int column, boolean isBooked) {
+    public SeatDTO(int row, int column, int price) {
         this(row, column);
-        this.isBooked = true;
+        this.price = price;
     }
 
     public int getRow() {
@@ -28,15 +27,7 @@ public class Seat {
         return column;
     }
 
-    public boolean isBooked() {
-        return isBooked;
-    }
-
-    public void book() {
-        isBooked = true;
-    }
-
-    public void cancelBooking() {
-        isBooked = false;
+    public int getPrice() {
+        return price;
     }
 }

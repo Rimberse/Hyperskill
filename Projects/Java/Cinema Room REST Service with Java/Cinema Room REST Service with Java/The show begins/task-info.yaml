@@ -125,7 +125,7 @@ files:
   - name: src/cinema/services/CinemaService.java
     visible: true
     learner_created: true
-  - name: src/cinema/model/Seat.java
+  - name: src/cinema/model/SeatDTO.java
     visible: true
     learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13375#comment
