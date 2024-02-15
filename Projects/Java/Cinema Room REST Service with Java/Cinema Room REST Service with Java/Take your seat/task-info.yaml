@@ -230,71 +230,6 @@ files:
           };
       }
     learner_created: false
-  - name: src/cinema/controllers/MovieTheaterController.java
-    visible: true
-    text: |
-      package cinema.controllers;
-      
-      import cinema.model.DTOs.CinemaDTO;
-      import org.springframework.beans.factory.annotation.Autowired;
-      import org.springframework.web.bind.annotation.GetMapping;
-      import org.springframework.web.bind.annotation.RequestMapping;
-      import org.springframework.web.bind.annotation.RestController;
-      import cinema.services.CinemaService;
-      
-      @RestController
-      @RequestMapping("/seats")
-      public class MovieTheaterController {
-          private final CinemaService cinemaService;
-      
-          @Autowired
-          public MovieTheaterController(CinemaService cinemaService) {
-              this.cinemaService = cinemaService;
-          }
-      
-          @GetMapping
-          public CinemaDTO getSeatsInfo() {
-              System.out.println(cinemaService.getSeatsInfo());
-              return cinemaService.getSeatsInfo();
-          }
-      }
-    learner_created: true
-  - name: src/cinema/model/DTOs/CinemaDTO.java
-    visible: true
-    text: |
-      package cinema.model.DTOs;
-      
-      import cinema.model.Seat;
-      
-      import java.util.List;
-      
-      public class CinemaDTO {
-          private int rows;
-          private int columns;
-      //    private List<List<Seat>> seats;
-          private List<Seat> seats;
-      
-      //    public CinemaDTO(int rows, int columns, List<List<Seat>> seats) {
-          public CinemaDTO(int rows, int columns, List<Seat> seats) {
-              this.rows = rows;
-              this.columns = columns;
-              this.seats = seats;
-          }
-      
-          public int getRows() {
-              return rows;
-          }
-      
-          public int getColumns() {
-              return columns;
-          }
-      
-      //    public List<List<Seat>> getSeats() {
-          public List<Seat> getSeats() {
-              return seats;
-          }
-      }
-    learner_created: true
   - name: src/cinema/services/CinemaService.java
     visible: true
     text: |
@@ -386,6 +321,77 @@ files:
   - name: src/cinema/services/SeatService.java
     visible: true
     learner_created: true
+  - name: src/cinema/controllers/SeatController.java
+    visible: true
+    text: |
+      package cinema.controllers;
+      
+      import cinema.model.DTOs.CinemaDTO;
+      import org.springframework.beans.factory.annotation.Autowired;
+      import org.springframework.web.bind.annotation.GetMapping;
+      import org.springframework.web.bind.annotation.RequestMapping;
+      import org.springframework.web.bind.annotation.RestController;
+      import cinema.services.CinemaService;
+      
+      @RestController
+      @RequestMapping("/seats")
+      public class MovieTheaterController {
+          private final CinemaService cinemaService;
+      
+          @Autowired
+          public MovieTheaterController(CinemaService cinemaService) {
+              this.cinemaService = cinemaService;
+          }
+      
+          @GetMapping
+          public CinemaDTO getSeatsInfo() {
+              System.out.println(cinemaService.getSeatsInfo());
+              return cinemaService.getSeatsInfo();
+          }
+      }
+    learner_created: true
+  - name: src/cinema/model/DTOs/errors/ErrorDTO.java
+    visible: true
+    learner_created: true
+  - name: src/cinema/model/DTOs/SeatResponseDTO.java
+    visible: true
+    text: |
+      package cinema.model.DTOs;
+      
+      import cinema.model.Seat;
+      
+      import java.util.List;
+      
+      public class CinemaDTO {
+          private int rows;
+          private int columns;
+      //    private List<List<Seat>> seats;
+          private List<Seat> seats;
+      
+      //    public CinemaDTO(int rows, int columns, List<List<Seat>> seats) {
+          public CinemaDTO(int rows, int columns, List<Seat> seats) {
+              this.rows = rows;
+              this.columns = columns;
+              this.seats = seats;
+          }
+      
+          public int getRows() {
+              return rows;
+          }
+      
+          public int getColumns() {
+              return columns;
+          }
+      
+      //    public List<List<Seat>> getSeats() {
+          public List<Seat> getSeats() {
+              return seats;
+          }
+      }
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13376#comment
-status: Unchecked
+status: Failed
+feedback:
+  message: Execution failed
+  time: "Thu, 15 Feb 2024 22:33:00 UTC"
 record: -1

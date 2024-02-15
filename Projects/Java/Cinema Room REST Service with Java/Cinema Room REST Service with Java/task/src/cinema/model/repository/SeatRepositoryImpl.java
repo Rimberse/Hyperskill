@@ -14,6 +14,12 @@ public class SeatRepositoryImpl implements SeatRepository {
 
     public SeatRepositoryImpl() {
         seats = new ArrayList<>();
+
+        for (int row = 0; row < 9; row++) {
+            for (int column = 0; column < 9; column++) {
+                seats.add(new SeatDTO(row + 1, column + 1));
+            }
+        }
     }
 
     @Override
