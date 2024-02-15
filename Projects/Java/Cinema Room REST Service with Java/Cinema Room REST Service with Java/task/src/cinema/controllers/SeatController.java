@@ -28,11 +28,12 @@ public class SeatController {
     }
 
     @PostMapping("/purchase")
-    public ResponseEntity<Object> purchaseTicket(@RequestBody SeatDTO ticketDTO) {
+    public ResponseEntity<?> purchaseTicket(@RequestBody SeatDTO ticketDTO) {
         try {
             SeatDTO purchasedTicket = seatService.purchaseTicket(ticketDTO);
             return ResponseEntity.ok(purchasedTicket);
         } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));
         }
     }

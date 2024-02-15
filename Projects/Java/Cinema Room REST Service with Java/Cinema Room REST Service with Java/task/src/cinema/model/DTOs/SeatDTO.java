@@ -1,22 +1,26 @@
 package cinema.model.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class SeatDTO {
     private final int row;
     private final int column;
-    private int price;
+    private final int price;
 
-    public SeatDTO(int row, int column) {
-        if (row > 0 && row < 10 && column > 0 && column < 10) {
-            this.row = row;
-            this.column = column;
+    public SeatDTO() {
+        this.row = 0;
+        this.column = 0;
+        this.price = 0;
+    }
 
-            if (row < 5) {
-                this.price = 10;
-            } else {
-                this.price = 8;
-            }
+    public SeatDTO(@JsonProperty("row") int row, @JsonProperty("column") int column) {
+        this.row = row;
+        this.column = column;
+
+        if (row < 5) {
+            this.price = 10;
         } else {
-            throw new IllegalArgumentException("Row and columns values should be numerated from 1 to 9");
+            this.price = 8;
         }
     }
 
@@ -30,9 +34,5 @@ public class SeatDTO {
 
     public int getPrice() {
         return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 }

@@ -10,10 +10,12 @@ import java.util.List;
 @Service
 public class SeatService {
     private final SeatRepository seatRepository;
+    private final BookingService bookingService;
 
     @Autowired
-    public SeatService(SeatRepository seatRepository) {
+    public SeatService(SeatRepository seatRepository, BookingService bookingService) {
         this.seatRepository = seatRepository;
+        this.bookingService = bookingService;
     }
 
     public List<SeatDTO> getAvailableSeats() {
@@ -28,10 +30,9 @@ public class SeatService {
         if (isValidSeat(row, column)) {
             SeatDTO selectedSeatDTO = seatRepository.findBySeatRowAndSeatColumn(row, column).orElse(null);
 
-            if (selectedSeatDTO != null && selectedSeatDTO.getPrice() > 0) {
-                selectedSeatDTO.setPrice(0);
+            if (selectedSeatDTO != null && bookingService.isAvailable(selectedSeatDTO)) {
+                bookingService.book(selectedSeatDTO);
                 seatRepository.save(selectedSeatDTO);
-
                 return selectedSeatDTO;
             } else {
                 throw new RuntimeException("The ticket has been already purchased!");

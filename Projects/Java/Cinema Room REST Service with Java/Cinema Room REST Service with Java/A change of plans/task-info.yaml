@@ -444,6 +444,331 @@ files:
           };
       }
     learner_created: false
+  - name: src/cinema/model/repository/TicketRepositoryImpl.java
+    visible: true
+    text: |
+      package cinema.model.repository;
+      
+      import cinema.model.DTOs.SeatDTO;
+      import cinema.model.repository.interfaces.TicketRepository;
+      import org.springframework.stereotype.Repository;
+      
+      @Repository
+      public class TicketRepositoryImpl implements TicketRepository {
+          private boolean[][] booked;
+      
+          public TicketRepositoryImpl() {
+              booked = new boolean[9][9];
+          }
+      
+          @Override
+          public boolean findForSeatRowAndSeatColumn(SeatDTO seatDTO) {
+              return booked[seatDTO.getRow() - 1][seatDTO.getColumn() - 1];
+          }
+      
+          @Override
+          public void save(SeatDTO seatDTO) {
+              booked[seatDTO.getRow() - 1][seatDTO.getColumn() - 1] = true;
+          }
+      }
+    learner_created: true
+  - name: src/cinema/model/DTOs/SeatDTO.java
+    visible: true
+    text: |
+      package cinema.model.DTOs;
+      
+      import com.fasterxml.jackson.annotation.JsonProperty;
+      
+      public class SeatDTO {
+          private final int row;
+          private final int column;
+          private final int price;
+      
+          public SeatDTO() {
+              this.row = 0;
+              this.column = 0;
+              this.price = 0;
+          }
+      
+          public SeatDTO(@JsonProperty("row") int row, @JsonProperty("column") int column) {
+              this.row = row;
+              this.column = column;
+      
+              if (row < 5) {
+                  this.price = 10;
+              } else {
+                  this.price = 8;
+              }
+          }
+      
+          public int getRow() {
+              return row;
+          }
+      
+          public int getColumn() {
+              return column;
+          }
+      
+          public int getPrice() {
+              return price;
+          }
+      }
+    learner_created: true
+  - name: src/cinema/controllers/SeatController.java
+    visible: true
+    text: |
+      package cinema.controllers;
+      
+      import cinema.model.DTOs.SeatDTO;
+      import cinema.model.DTOs.SeatResponseDTO;
+      import cinema.model.DTOs.errors.ErrorDTO;
+      import cinema.services.SeatService;
+      import org.springframework.beans.factory.annotation.Autowired;
+      import org.springframework.http.ResponseEntity;
+      import org.springframework.web.bind.annotation.*;
+      
+      import java.util.List;
+      
+      @RestController
+      @RequestMapping("/")
+      public class SeatController {
+          private final SeatService seatService;
+      
+          @Autowired
+          public SeatController(SeatService seatService) {
+              this.seatService = seatService;
+          }
+      
+          @GetMapping("/seats")
+          public ResponseEntity<SeatResponseDTO> getAvailableSeats() {
+              List<SeatDTO> availableSeats = seatService.getAvailableSeats();
+              SeatResponseDTO seatResponseDTO = new SeatResponseDTO(availableSeats);
+              return ResponseEntity.ok(seatResponseDTO);
+          }
+      
+          @PostMapping("/purchase")
+          public ResponseEntity<?> purchaseTicket(@RequestBody SeatDTO ticketDTO) {
+              try {
+                  SeatDTO purchasedTicket = seatService.purchaseTicket(ticketDTO);
+                  return ResponseEntity.ok(purchasedTicket);
+              } catch (RuntimeException e) {
+                  System.out.println(e.getMessage());
+                  return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));
+              }
+          }
+      }
+    learner_created: true
+  - name: src/cinema/model/repository/interfaces/TicketRepository.java
+    visible: true
+    text: |
+      package cinema.model.repository.interfaces;
+      
+      import cinema.model.DTOs.SeatDTO;
+      import org.springframework.stereotype.Repository;
+      
+      @Repository
+      public interface TicketRepository {
+          boolean findForSeatRowAndSeatColumn(SeatDTO seatDTO);
+          void save(SeatDTO seatDTO);
+      }
+    learner_created: true
+  - name: src/cinema/model/repository/SeatRepositoryImpl.java
+    visible: true
+    text: |
+      package cinema.model.repository;
+      
+      import cinema.model.DTOs.SeatDTO;
+      import cinema.model.repository.interfaces.SeatRepository;
+      import org.springframework.stereotype.Repository;
+      
+      import java.util.ArrayList;
+      import java.util.List;
+      import java.util.Optional;
+      
+      @Repository
+      public class SeatRepositoryImpl implements SeatRepository {
+          private List<SeatDTO> seats;
+      
+          public SeatRepositoryImpl() {
+              seats = new ArrayList<>();
+      
+              for (int row = 0; row < 9; row++) {
+                  for (int column = 0; column < 9; column++) {
+                      seats.add(new SeatDTO(row + 1, column + 1));
+                  }
+              }
+          }
+      
+          @Override
+          public List<SeatDTO> findAll() {
+              return seats;
+          }
+      
+          @Override
+          public Optional<SeatDTO> findBySeatRowAndSeatColumn(int row, int column) {
+              return seats.stream()
+                      .filter(seat -> seat.getRow() == row && seat.getColumn() == column)
+                      .findAny();
+          }
+      
+          @Override
+          public void save(SeatDTO seat) {
+              seats.add(seat);
+          }
+      }
+    learner_created: true
+  - name: src/cinema/model/DTOs/SeatResponseDTO.java
+    visible: true
+    text: |
+      package cinema.model.DTOs;
+      
+      import java.util.List;
+      
+      public class SeatResponseDTO {
+          private int rows;
+          private int columns;
+          private List<SeatDTO> seats;
+      
+          public SeatResponseDTO(List<SeatDTO> seats) {
+              this.rows = 9;
+              this.columns = 9;
+              this.seats = seats;
+          }
+      
+          public int getRows() {
+              return rows;
+          }
+      
+          public int getColumns() {
+              return columns;
+          }
+      
+          public List<SeatDTO> getSeats() {
+              return seats;
+          }
+      }
+    learner_created: true
+  - name: src/cinema/model/DTOs/errors/ErrorDTO.java
+    visible: true
+    text: |
+      package cinema.model.DTOs.errors;
+      
+      import com.fasterxml.jackson.annotation.JsonProperty;
+      
+      public class ErrorDTO {
+          private String error;
+      
+          public ErrorDTO() {
+              this.error = "";
+          }
+      
+          public ErrorDTO(@JsonProperty("error") String error) {
+              this.error = error;
+          }
+      
+          public String getError() {
+              return error;
+          }
+      }
+    learner_created: true
+  - name: src/cinema/model/repository/interfaces/SeatRepository.java
+    visible: true
+    text: |
+      package cinema.model.repository.interfaces;
+      
+      import cinema.model.DTOs.SeatDTO;
+      import org.springframework.stereotype.Repository;
+      
+      import java.util.List;
+      import java.util.Optional;
+      
+      @Repository
+      public interface SeatRepository {
+          List<SeatDTO> findAll();
+          Optional<SeatDTO> findBySeatRowAndSeatColumn(int row, int column);
+          void save(SeatDTO seat);
+      }
+    learner_created: true
+  - name: src/cinema/services/BookingService.java
+    visible: true
+    text: |
+      package cinema.services;
+      
+      import cinema.model.DTOs.SeatDTO;
+      import cinema.model.repository.interfaces.TicketRepository;
+      import org.springframework.beans.factory.annotation.Autowired;
+      import org.springframework.stereotype.Service;
+      
+      @Service
+      public class BookingService {
+          private final TicketRepository ticketRepository;
+      
+          @Autowired
+          public BookingService(TicketRepository ticketRepository) {
+              this.ticketRepository = ticketRepository;
+          }
+      
+          public boolean isAvailable(SeatDTO seatDTO) {
+              return !ticketRepository.findForSeatRowAndSeatColumn(seatDTO);
+          }
+      
+          public void book(SeatDTO seatDTO) {
+              ticketRepository.save(seatDTO);
+          }
+      }
+    learner_created: true
+  - name: src/cinema/services/SeatService.java
+    visible: true
+    text: |
+      package cinema.services;
+      
+      import cinema.model.DTOs.SeatDTO;
+      import cinema.model.repository.interfaces.SeatRepository;
+      import org.springframework.beans.factory.annotation.Autowired;
+      import org.springframework.stereotype.Service;
+      
+      import java.util.List;
+      
+      @Service
+      public class SeatService {
+          private final SeatRepository seatRepository;
+          private final BookingService bookingService;
+      
+          @Autowired
+          public SeatService(SeatRepository seatRepository, BookingService bookingService) {
+              this.seatRepository = seatRepository;
+              this.bookingService = bookingService;
+          }
+      
+          public List<SeatDTO> getAvailableSeats() {
+              List<SeatDTO> availableSeats = seatRepository.findAll();
+              return availableSeats;
+          }
+      
+          public SeatDTO purchaseTicket(SeatDTO ticketDTO) {
+              int row = ticketDTO.getRow();
+              int column = ticketDTO.getColumn();
+      
+              if (isValidSeat(row, column)) {
+                  SeatDTO selectedSeatDTO = seatRepository.findBySeatRowAndSeatColumn(row, column).orElse(null);
+      
+                  if (selectedSeatDTO != null && bookingService.isAvailable(selectedSeatDTO)) {
+                      bookingService.book(selectedSeatDTO);
+                      seatRepository.save(selectedSeatDTO);
+                      return selectedSeatDTO;
+                  } else {
+                      throw new RuntimeException("The ticket has been already purchased!");
+                  }
+              } else {
+                  throw new RuntimeException("The number of a row or a column is out of bounds!");
+              }
+          }
+      
+          private boolean isValidSeat(int row, int column) {
+              return row > 0 && row < 10 && column > 0 && column < 10;
+          }
+      }
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13377#comment
 status: Unchecked
 record: -1
