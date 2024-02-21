@@ -5,20 +5,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.UUID;
 
 public class OrderDTO {
-    private final String token;
+    private final TokenDTO token;
     private final TicketDTO ticket;
 
     public OrderDTO() {
-        this.token = "";
+        this.token = null;
         this.ticket = null;
     }
 
-    public OrderDTO(@JsonProperty("column") TicketDTO ticket) {
-        this.token = UUID.randomUUID().toString();
+    public OrderDTO(@JsonProperty("column") TokenDTO token, @JsonProperty("column") TicketDTO ticket) {
+        this.token = token;
         this.ticket = ticket;
     }
 
-    public String getToken() {
+    public TokenDTO getToken() {
         return token;
     }
 

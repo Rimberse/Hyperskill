@@ -3,6 +3,7 @@ package cinema.controllers;
 import cinema.model.DTOs.OrderDTO;
 import cinema.model.DTOs.SeatResponseDTO;
 import cinema.model.DTOs.TicketDTO;
+import cinema.model.DTOs.TokenDTO;
 import cinema.model.DTOs.errors.ErrorDTO;
 import cinema.services.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,10 @@ public class SeatController {
     @PostMapping("/purchase")
     public ResponseEntity<?> purchaseTicket(@RequestBody TicketDTO ticketDTO) {
         try {
-            OrderDTO ticketOrder = new OrderDTO(seatService.purchaseTicket(ticketDTO));
-            return ResponseEntity.ok(ticketOrder);
+            TicketDTO ticket = seatService.purchaseTicket(ticketDTO);
+            TokenDTO token = new TokenDTO();
+            OrderDTO order = new OrderDTO(token, ticket);
+            return ResponseEntity.ok(order);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));
