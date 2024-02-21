@@ -230,7 +230,7 @@ files:
           };
       }
     learner_created: false
-  - name: src/cinema/model/DTOs/SeatDTO.java
+  - name: src/cinema/model/DTOs/TicketDTO.java
     visible: true
     text: |
       package cinema.model;

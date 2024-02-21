@@ -472,48 +472,6 @@ files:
           }
       }
     learner_created: true
-  - name: src/cinema/model/DTOs/SeatDTO.java
-    visible: true
-    text: |
-      package cinema.model.DTOs;
-      
-      import com.fasterxml.jackson.annotation.JsonProperty;
-      
-      public class SeatDTO {
-          private final int row;
-          private final int column;
-          private final int price;
-      
-          public SeatDTO() {
-              this.row = 0;
-              this.column = 0;
-              this.price = 0;
-          }
-      
-          public SeatDTO(@JsonProperty("row") int row, @JsonProperty("column") int column) {
-              this.row = row;
-              this.column = column;
-      
-              if (row < 5) {
-                  this.price = 10;
-              } else {
-                  this.price = 8;
-              }
-          }
-      
-          public int getRow() {
-              return row;
-          }
-      
-          public int getColumn() {
-              return column;
-          }
-      
-          public int getPrice() {
-              return price;
-          }
-      }
-    learner_created: true
   - name: src/cinema/controllers/SeatController.java
     visible: true
     text: |
@@ -766,6 +724,51 @@ files:
       
           private boolean isValidSeat(int row, int column) {
               return row > 0 && row < 10 && column > 0 && column < 10;
+          }
+      }
+    learner_created: true
+  - name: src/cinema/model/DTOs/OrderDTO.java
+    visible: true
+    learner_created: true
+  - name: src/cinema/model/DTOs/TicketDTO.java
+    visible: true
+    text: |
+      package cinema.model.DTOs;
+      
+      import com.fasterxml.jackson.annotation.JsonProperty;
+      
+      public class SeatDTO {
+          private final int row;
+          private final int column;
+          private final int price;
+      
+          public SeatDTO() {
+              this.row = 0;
+              this.column = 0;
+              this.price = 0;
+          }
+      
+          public SeatDTO(@JsonProperty("row") int row, @JsonProperty("column") int column) {
+              this.row = row;
+              this.column = column;
+      
+              if (row < 5) {
+                  this.price = 10;
+              } else {
+                  this.price = 8;
+              }
+          }
+      
+          public int getRow() {
+              return row;
+          }
+      
+          public int getColumn() {
+              return column;
+          }
+      
+          public int getPrice() {
+              return price;
           }
       }
     learner_created: true

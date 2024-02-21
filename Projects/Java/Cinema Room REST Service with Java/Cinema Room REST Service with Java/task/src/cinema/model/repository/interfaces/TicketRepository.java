@@ -1,10 +1,10 @@
 package cinema.model.repository.interfaces;
 
-import cinema.model.DTOs.SeatDTO;
+import cinema.model.DTOs.TicketDTO;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TicketRepository {
-    boolean findForSeatRowAndSeatColumn(SeatDTO seatDTO);
-    void save(SeatDTO seatDTO);
+    boolean findForSeatRowAndSeatColumn(TicketDTO ticket);
+    void save(TicketDTO ticket);
 }

@@ -5,9 +5,9 @@ import java.util.List;
 public class SeatResponseDTO {
     private int rows;
     private int columns;
-    private List<SeatDTO> seats;
+    private List<TicketDTO> seats;
 
-    public SeatResponseDTO(List<SeatDTO> seats) {
+    public SeatResponseDTO(List<TicketDTO> seats) {
         this.rows = 9;
         this.columns = 9;
         this.seats = seats;
@@ -21,7 +21,7 @@ public class SeatResponseDTO {
         return columns;
     }
 
-    public List<SeatDTO> getSeats() {
+    public List<TicketDTO> getSeats() {
         return seats;
     }
 }

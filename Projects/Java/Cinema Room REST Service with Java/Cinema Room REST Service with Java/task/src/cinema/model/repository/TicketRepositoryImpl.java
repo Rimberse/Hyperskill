@@ -1,6 +1,6 @@
 package cinema.model.repository;
 
-import cinema.model.DTOs.SeatDTO;
+import cinema.model.DTOs.TicketDTO;
 import cinema.model.repository.interfaces.TicketRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,12 +13,12 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
-    public boolean findForSeatRowAndSeatColumn(SeatDTO seatDTO) {
-        return booked[seatDTO.getRow() - 1][seatDTO.getColumn() - 1];
+    public boolean findForSeatRowAndSeatColumn(TicketDTO ticket) {
+        return booked[ticket.getRow() - 1][ticket.getColumn() - 1];
     }
 
     @Override
-    public void save(SeatDTO seatDTO) {
-        booked[seatDTO.getRow() - 1][seatDTO.getColumn() - 1] = true;
+    public void save(TicketDTO ticket) {
+        booked[ticket.getRow() - 1][ticket.getColumn() - 1] = true;
     }
 }

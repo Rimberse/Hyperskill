@@ -1,6 +1,6 @@
 package cinema.services;
 
-import cinema.model.DTOs.SeatDTO;
+import cinema.model.DTOs.TicketDTO;
 import cinema.model.repository.interfaces.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +14,11 @@ public class BookingService {
         this.ticketRepository = ticketRepository;
     }
 
-    public boolean isAvailable(SeatDTO seatDTO) {
-        return !ticketRepository.findForSeatRowAndSeatColumn(seatDTO);
+    public boolean isAvailable(TicketDTO ticket) {
+        return !ticketRepository.findForSeatRowAndSeatColumn(ticket);
     }
 
-    public void book(SeatDTO seatDTO) {
-        ticketRepository.save(seatDTO);
+    public void book(TicketDTO ticket) {
+        ticketRepository.save(ticket);
     }
 }

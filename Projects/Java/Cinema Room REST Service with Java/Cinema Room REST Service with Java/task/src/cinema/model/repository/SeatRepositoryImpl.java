@@ -1,6 +1,6 @@
 package cinema.model.repository;
 
-import cinema.model.DTOs.SeatDTO;
+import cinema.model.DTOs.TicketDTO;
 import cinema.model.repository.interfaces.SeatRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,32 +10,32 @@ import java.util.Optional;
 
 @Repository
 public class SeatRepositoryImpl implements SeatRepository {
-    private List<SeatDTO> seats;
+    private List<TicketDTO> tickets;
 
     public SeatRepositoryImpl() {
-        seats = new ArrayList<>();
+        tickets = new ArrayList<>();
 
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
-                seats.add(new SeatDTO(row + 1, column + 1));
+                tickets.add(new TicketDTO(row + 1, column + 1));
             }
         }
     }
 
     @Override
-    public List<SeatDTO> findAll() {
-        return seats;
+    public List<TicketDTO> findAll() {
+        return tickets;
     }
 
     @Override
-    public Optional<SeatDTO> findBySeatRowAndSeatColumn(int row, int column) {
-        return seats.stream()
+    public Optional<TicketDTO> findBySeatRowAndSeatColumn(int row, int column) {
+        return tickets.stream()
                 .filter(seat -> seat.getRow() == row && seat.getColumn() == column)
                 .findAny();
     }
 
     @Override
-    public void save(SeatDTO seat) {
-        seats.add(seat);
+    public void save(TicketDTO ticket) {
+        tickets.add(ticket);
     }
 }
