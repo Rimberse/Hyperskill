@@ -14,11 +14,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/")
-public class SeatController {
+public class TicketController {
     private final TicketService ticketService;
 
     @Autowired
-    public SeatController(TicketService ticketService) {
+    public TicketController(TicketService ticketService) {
         this.ticketService = ticketService;
     }
 

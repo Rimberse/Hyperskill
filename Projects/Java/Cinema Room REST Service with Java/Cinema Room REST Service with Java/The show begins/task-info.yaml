@@ -116,7 +116,7 @@ files:
           jvmArgs '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
       }
     learner_created: false
-  - name: src/cinema/controllers/SeatController.java
+  - name: src/cinema/controllers/TicketController.java
     visible: true
     learner_created: true
   - name: src/cinema/model/DTOs/SeatResponseDTO.java

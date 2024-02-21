@@ -3,8 +3,6 @@ package cinema.model.DTOs;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.UUID;
-
 public class OrderDTO {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final TokenDTO token;

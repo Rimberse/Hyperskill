@@ -43,7 +43,7 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public Optional<OrderDTO> findByToken(TokenDTO token) {
-        return Optional.ofNullable(orders.get(token));
+        return Optional.ofNullable(orders.getOrDefault(token, null));
     }
 
     @Override

@@ -12,12 +12,10 @@ import java.util.List;
 @Service
 public class TicketService {
     private final TicketRepository ticketRepository;
-    private final BookingService bookingService;
 
     @Autowired
-    public TicketService(TicketRepository ticketRepository, BookingService bookingService) {
+    public TicketService(TicketRepository ticketRepository) {
         this.ticketRepository = ticketRepository;
-        this.bookingService = bookingService;
     }
 
     public List<TicketDTO> getAvailableSeats() {
@@ -32,10 +30,10 @@ public class TicketService {
         if (isValidSeat(row, column)) {
             TicketDTO selectedSeat = ticketRepository.findBySeatRowAndSeatColumn(row, column).orElse(null);
 
-            if (selectedSeat != null && bookingService.isAvailable(selectedSeat)) {
+            if (selectedSeat != null && !selectedSeat.isBooked()) {
                 TokenDTO token = new TokenDTO();
                 OrderDTO order = new OrderDTO(token, selectedSeat);
-                bookingService.book(selectedSeat);
+                selectedSeat.setBooked(true);
                 ticketRepository.save(order);
                 return order;
             } else {
@@ -50,8 +48,10 @@ public class TicketService {
         OrderDTO order = ticketRepository.findByToken(token).orElse(null);
 
         if (order != null) {
-            ticketRepository.delete(order.getToken());
-            return new OrderDTO(null, order.getTicket());
+            ticketRepository.delete(token);
+            TicketDTO ticket = order.getTicket();
+            ticket.setBooked(false);
+            return new OrderDTO(null, ticket);
         } else {
             throw new RuntimeException("Wrong token!");
         }

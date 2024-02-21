@@ -444,50 +444,6 @@ files:
           };
       }
     learner_created: false
-  - name: src/cinema/controllers/SeatController.java
-    visible: true
-    text: |
-      package cinema.controllers;
-      
-      import cinema.model.DTOs.SeatDTO;
-      import cinema.model.DTOs.SeatResponseDTO;
-      import cinema.model.DTOs.errors.ErrorDTO;
-      import cinema.services.SeatService;
-      import org.springframework.beans.factory.annotation.Autowired;
-      import org.springframework.http.ResponseEntity;
-      import org.springframework.web.bind.annotation.*;
-      
-      import java.util.List;
-      
-      @RestController
-      @RequestMapping("/")
-      public class SeatController {
-          private final SeatService seatService;
-      
-          @Autowired
-          public SeatController(SeatService seatService) {
-              this.seatService = seatService;
-          }
-      
-          @GetMapping("/seats")
-          public ResponseEntity<SeatResponseDTO> getAvailableSeats() {
-              List<SeatDTO> availableSeats = seatService.getAvailableSeats();
-              SeatResponseDTO seatResponseDTO = new SeatResponseDTO(availableSeats);
-              return ResponseEntity.ok(seatResponseDTO);
-          }
-      
-          @PostMapping("/purchase")
-          public ResponseEntity<?> purchaseTicket(@RequestBody SeatDTO ticketDTO) {
-              try {
-                  SeatDTO purchasedTicket = seatService.purchaseTicket(ticketDTO);
-                  return ResponseEntity.ok(purchasedTicket);
-              } catch (RuntimeException e) {
-                  System.out.println(e.getMessage());
-                  return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));
-              }
-          }
-      }
-    learner_created: true
   - name: src/cinema/model/DTOs/SeatResponseDTO.java
     visible: true
     text: |
@@ -539,34 +495,6 @@ files:
       
           public String getError() {
               return error;
-          }
-      }
-    learner_created: true
-  - name: src/cinema/services/BookingService.java
-    visible: true
-    text: |
-      package cinema.services;
-      
-      import cinema.model.DTOs.SeatDTO;
-      import cinema.model.repository.interfaces.TicketRepository;
-      import org.springframework.beans.factory.annotation.Autowired;
-      import org.springframework.stereotype.Service;
-      
-      @Service
-      public class BookingService {
-          private final TicketRepository ticketRepository;
-      
-          @Autowired
-          public BookingService(TicketRepository ticketRepository) {
-              this.ticketRepository = ticketRepository;
-          }
-      
-          public boolean isAvailable(SeatDTO seatDTO) {
-              return !ticketRepository.findForSeatRowAndSeatColumn(seatDTO);
-          }
-      
-          public void book(SeatDTO seatDTO) {
-              ticketRepository.save(seatDTO);
           }
       }
     learner_created: true
@@ -730,6 +658,50 @@ files:
       
           private boolean isValidSeat(int row, int column) {
               return row > 0 && row < 10 && column > 0 && column < 10;
+          }
+      }
+    learner_created: true
+  - name: src/cinema/controllers/TicketController.java
+    visible: true
+    text: |
+      package cinema.controllers;
+      
+      import cinema.model.DTOs.SeatDTO;
+      import cinema.model.DTOs.SeatResponseDTO;
+      import cinema.model.DTOs.errors.ErrorDTO;
+      import cinema.services.SeatService;
+      import org.springframework.beans.factory.annotation.Autowired;
+      import org.springframework.http.ResponseEntity;
+      import org.springframework.web.bind.annotation.*;
+      
+      import java.util.List;
+      
+      @RestController
+      @RequestMapping("/")
+      public class SeatController {
+          private final SeatService seatService;
+      
+          @Autowired
+          public SeatController(SeatService seatService) {
+              this.seatService = seatService;
+          }
+      
+          @GetMapping("/seats")
+          public ResponseEntity<SeatResponseDTO> getAvailableSeats() {
+              List<SeatDTO> availableSeats = seatService.getAvailableSeats();
+              SeatResponseDTO seatResponseDTO = new SeatResponseDTO(availableSeats);
+              return ResponseEntity.ok(seatResponseDTO);
+          }
+      
+          @PostMapping("/purchase")
+          public ResponseEntity<?> purchaseTicket(@RequestBody SeatDTO ticketDTO) {
+              try {
+                  SeatDTO purchasedTicket = seatService.purchaseTicket(ticketDTO);
+                  return ResponseEntity.ok(purchasedTicket);
+              } catch (RuntimeException e) {
+                  System.out.println(e.getMessage());
+                  return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));
+              }
           }
       }
     learner_created: true
