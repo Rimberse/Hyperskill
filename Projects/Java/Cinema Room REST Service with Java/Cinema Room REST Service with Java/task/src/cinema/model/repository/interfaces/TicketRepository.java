@@ -3,6 +3,7 @@ package cinema.model.repository.interfaces;
 import cinema.model.DTOs.OrderDTO;
 import cinema.model.DTOs.TicketDTO;
 import cinema.model.DTOs.TokenDTO;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface TicketRepository {
     Optional<TicketDTO> findBySeatRowAndSeatColumn(int row, int column);
     Optional<OrderDTO> findByToken(TokenDTO token);
     void save(OrderDTO order);
+    void delete(TokenDTO token);
 }

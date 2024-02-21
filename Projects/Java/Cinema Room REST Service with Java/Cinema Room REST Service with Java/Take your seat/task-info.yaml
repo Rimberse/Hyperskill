@@ -282,7 +282,7 @@ files:
   - name: src/cinema/model/repository/TicketRepositoryImpl.java
     visible: true
     learner_created: true
-  - name: src/cinema/services/SeatService.java
+  - name: src/cinema/services/TicketService.java
     visible: true
     learner_created: true
   - name: src/cinema/controllers/SeatController.java

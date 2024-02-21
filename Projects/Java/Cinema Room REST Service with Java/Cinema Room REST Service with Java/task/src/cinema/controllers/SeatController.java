@@ -5,7 +5,7 @@ import cinema.model.DTOs.SeatResponseDTO;
 import cinema.model.DTOs.TicketDTO;
 import cinema.model.DTOs.TokenDTO;
 import cinema.model.DTOs.errors.ErrorDTO;
-import cinema.services.SeatService;
+import cinema.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,16 +15,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/")
 public class SeatController {
-    private final SeatService seatService;
+    private final TicketService ticketService;
 
     @Autowired
-    public SeatController(SeatService seatService) {
-        this.seatService = seatService;
+    public SeatController(TicketService ticketService) {
+        this.ticketService = ticketService;
     }
 
     @GetMapping("/seats")
     public ResponseEntity<SeatResponseDTO> getAvailableSeats() {
-        List<TicketDTO> availableSeats = seatService.getAvailableSeats();
+        List<TicketDTO> availableSeats = ticketService.getAvailableSeats();
         SeatResponseDTO seatResponseDTO = new SeatResponseDTO(availableSeats);
         return ResponseEntity.ok(seatResponseDTO);
     }
@@ -32,9 +32,7 @@ public class SeatController {
     @PostMapping("/purchase")
     public ResponseEntity<?> purchaseTicket(@RequestBody TicketDTO ticketDTO) {
         try {
-            TicketDTO ticket = seatService.purchaseTicket(ticketDTO);
-            TokenDTO token = new TokenDTO();
-            OrderDTO order = new OrderDTO(token, ticket);
+            OrderDTO order = ticketService.purchaseTicket(ticketDTO);
             return ResponseEntity.ok(order);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));
@@ -44,9 +42,7 @@ public class SeatController {
     @PostMapping("/return")
     public ResponseEntity<?> refundTicket(@RequestBody TokenDTO tokenDTO) {
         try {
-            TicketDTO ticket = seatService.refundTicket(tokenDTO);
-            TokenDTO token = new TokenDTO();
-            OrderDTO order = new OrderDTO(token, ticket);
+            OrderDTO order = ticketService.refundTicket(tokenDTO);
             return ResponseEntity.ok(order);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));

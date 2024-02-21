@@ -50,4 +50,9 @@ public class TicketRepositoryImpl implements TicketRepository {
     public void save(OrderDTO order) {
         orders.putIfAbsent(order.getToken(), order);
     }
+
+    @Override
+    public void delete(TokenDTO token) {
+        orders.remove(token);
+    }
 }
