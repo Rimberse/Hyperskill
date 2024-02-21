@@ -37,7 +37,18 @@ public class SeatController {
             OrderDTO order = new OrderDTO(token, ticket);
             return ResponseEntity.ok(order);
         } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));
+        }
+    }
+
+    @PostMapping("/return")
+    public ResponseEntity<?> refundTicket(@RequestBody TokenDTO tokenDTO) {
+        try {
+            TicketDTO ticket = seatService.refundTicket(tokenDTO);
+            TokenDTO token = new TokenDTO();
+            OrderDTO order = new OrderDTO(token, ticket);
+            return ResponseEntity.ok(order);
+        } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));
         }
     }

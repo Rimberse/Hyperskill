@@ -276,10 +276,10 @@ files:
       //    }
       }
     learner_created: true
-  - name: src/cinema/model/repository/interfaces/SeatRepository.java
+  - name: src/cinema/model/repository/interfaces/TicketRepository.java
     visible: true
     learner_created: true
-  - name: src/cinema/model/repository/SeatRepositoryImpl.java
+  - name: src/cinema/model/repository/TicketRepositoryImpl.java
     visible: true
     learner_created: true
   - name: src/cinema/services/SeatService.java

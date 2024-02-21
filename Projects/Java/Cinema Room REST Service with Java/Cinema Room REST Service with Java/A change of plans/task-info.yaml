@@ -444,34 +444,6 @@ files:
           };
       }
     learner_created: false
-  - name: src/cinema/model/repository/TicketRepositoryImpl.java
-    visible: true
-    text: |
-      package cinema.model.repository;
-      
-      import cinema.model.DTOs.SeatDTO;
-      import cinema.model.repository.interfaces.TicketRepository;
-      import org.springframework.stereotype.Repository;
-      
-      @Repository
-      public class TicketRepositoryImpl implements TicketRepository {
-          private boolean[][] booked;
-      
-          public TicketRepositoryImpl() {
-              booked = new boolean[9][9];
-          }
-      
-          @Override
-          public boolean findForSeatRowAndSeatColumn(SeatDTO seatDTO) {
-              return booked[seatDTO.getRow() - 1][seatDTO.getColumn() - 1];
-          }
-      
-          @Override
-          public void save(SeatDTO seatDTO) {
-              booked[seatDTO.getRow() - 1][seatDTO.getColumn() - 1] = true;
-          }
-      }
-    learner_created: true
   - name: src/cinema/controllers/SeatController.java
     visible: true
     text: |
@@ -513,65 +485,6 @@ files:
                   System.out.println(e.getMessage());
                   return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));
               }
-          }
-      }
-    learner_created: true
-  - name: src/cinema/model/repository/interfaces/TicketRepository.java
-    visible: true
-    text: |
-      package cinema.model.repository.interfaces;
-      
-      import cinema.model.DTOs.SeatDTO;
-      import org.springframework.stereotype.Repository;
-      
-      @Repository
-      public interface TicketRepository {
-          boolean findForSeatRowAndSeatColumn(SeatDTO seatDTO);
-          void save(SeatDTO seatDTO);
-      }
-    learner_created: true
-  - name: src/cinema/model/repository/SeatRepositoryImpl.java
-    visible: true
-    text: |
-      package cinema.model.repository;
-      
-      import cinema.model.DTOs.SeatDTO;
-      import cinema.model.repository.interfaces.SeatRepository;
-      import org.springframework.stereotype.Repository;
-      
-      import java.util.ArrayList;
-      import java.util.List;
-      import java.util.Optional;
-      
-      @Repository
-      public class SeatRepositoryImpl implements SeatRepository {
-          private List<SeatDTO> seats;
-      
-          public SeatRepositoryImpl() {
-              seats = new ArrayList<>();
-      
-              for (int row = 0; row < 9; row++) {
-                  for (int column = 0; column < 9; column++) {
-                      seats.add(new SeatDTO(row + 1, column + 1));
-                  }
-              }
-          }
-      
-          @Override
-          public List<SeatDTO> findAll() {
-              return seats;
-          }
-      
-          @Override
-          public Optional<SeatDTO> findBySeatRowAndSeatColumn(int row, int column) {
-              return seats.stream()
-                      .filter(seat -> seat.getRow() == row && seat.getColumn() == column)
-                      .findAny();
-          }
-      
-          @Override
-          public void save(SeatDTO seat) {
-              seats.add(seat);
           }
       }
     learner_created: true
@@ -627,24 +540,6 @@ files:
           public String getError() {
               return error;
           }
-      }
-    learner_created: true
-  - name: src/cinema/model/repository/interfaces/SeatRepository.java
-    visible: true
-    text: |
-      package cinema.model.repository.interfaces;
-      
-      import cinema.model.DTOs.SeatDTO;
-      import org.springframework.stereotype.Repository;
-      
-      import java.util.List;
-      import java.util.Optional;
-      
-      @Repository
-      public interface SeatRepository {
-          List<SeatDTO> findAll();
-          Optional<SeatDTO> findBySeatRowAndSeatColumn(int row, int column);
-          void save(SeatDTO seat);
       }
     learner_created: true
   - name: src/cinema/services/BookingService.java
@@ -774,6 +669,69 @@ files:
     learner_created: true
   - name: src/cinema/model/DTOs/TokenDTO.java
     visible: true
+    learner_created: true
+  - name: src/cinema/model/repository/interfaces/TicketRepository.java
+    visible: true
+    text: |
+      package cinema.model.repository.interfaces;
+      
+      import cinema.model.DTOs.SeatDTO;
+      import org.springframework.stereotype.Repository;
+      
+      import java.util.List;
+      import java.util.Optional;
+      
+      @Repository
+      public interface SeatRepository {
+          List<SeatDTO> findAll();
+          Optional<SeatDTO> findBySeatRowAndSeatColumn(int row, int column);
+          void save(SeatDTO seat);
+      }
+    learner_created: true
+  - name: src/cinema/model/repository/TicketRepositoryImpl.java
+    visible: true
+    text: |
+      package cinema.model.repository;
+      
+      import cinema.model.DTOs.SeatDTO;
+      import cinema.model.repository.interfaces.SeatRepository;
+      import org.springframework.stereotype.Repository;
+      
+      import java.util.ArrayList;
+      import java.util.List;
+      import java.util.Optional;
+      
+      @Repository
+      public class SeatRepositoryImpl implements SeatRepository {
+          private List<SeatDTO> seats;
+      
+          public SeatRepositoryImpl() {
+              seats = new ArrayList<>();
+      
+              for (int row = 0; row < 9; row++) {
+                  for (int column = 0; column < 9; column++) {
+                      seats.add(new SeatDTO(row + 1, column + 1));
+                  }
+              }
+          }
+      
+          @Override
+          public List<SeatDTO> findAll() {
+              return seats;
+          }
+      
+          @Override
+          public Optional<SeatDTO> findBySeatRowAndSeatColumn(int row, int column) {
+              return seats.stream()
+                      .filter(seat -> seat.getRow() == row && seat.getColumn() == column)
+                      .findAny();
+          }
+      
+          @Override
+          public void save(SeatDTO seat) {
+              seats.add(seat);
+          }
+      }
     learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13377#comment
 status: Unchecked

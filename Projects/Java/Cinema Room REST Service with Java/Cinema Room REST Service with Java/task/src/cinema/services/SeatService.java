@@ -1,6 +1,7 @@
 package cinema.services;
 
 import cinema.model.DTOs.TicketDTO;
+import cinema.model.DTOs.TokenDTO;
 import cinema.model.repository.interfaces.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,18 @@ public class SeatService {
             }
         } else {
             throw new RuntimeException("The number of a row or a column is out of bounds!");
+        }
+    }
+
+    public TicketDTO refundTicket(TokenDTO token) {
+        TicketDTO selectedSeatDTO = seatRepository.findByToken(token).orElse(null);
+
+        if (selectedSeatDTO != null && bookingService.isAvailable(selectedSeatDTO)) {
+            bookingService.book(selectedSeatDTO);
+            seatRepository.save(selectedSeatDTO);
+            return selectedSeatDTO;
+        } else {
+            throw new RuntimeException("The ticket has been already purchased!");
         }
     }
 
