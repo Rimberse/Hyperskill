@@ -119,7 +119,7 @@ files:
   - name: src/cinema/controllers/TicketController.java
     visible: true
     learner_created: true
-  - name: src/cinema/model/DTOs/SeatResponseDTO.java
+  - name: src/cinema/model/DTOs/AvailableSeatsDTO.java
     visible: true
     learner_created: true
   - name: src/cinema/services/CinemaService.java

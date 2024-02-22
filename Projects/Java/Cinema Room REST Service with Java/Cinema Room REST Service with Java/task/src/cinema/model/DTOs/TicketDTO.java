@@ -7,15 +7,7 @@ public class TicketDTO {
     private final int row;
     private final int column;
     private final int price;
-    @JsonIgnore
     private boolean isBooked;
-
-    public TicketDTO() {
-        this.row = 0;
-        this.column = 0;
-        this.price = 0;
-        this.isBooked = false;
-    }
 
     public TicketDTO(@JsonProperty("row") int row, @JsonProperty("column") int column) {
         this.row = row;
@@ -41,6 +33,7 @@ public class TicketDTO {
         return price;
     }
 
+    @JsonIgnore
     public boolean isBooked() {
         return isBooked;
     }

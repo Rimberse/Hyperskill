@@ -3,26 +3,25 @@ package cinema.model.DTOs;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class OrderDTO {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final TokenDTO token;
-    private final TicketDTO ticket;
+import java.util.UUID;
 
-    public OrderDTO() {
-        this.token = null;
-        this.ticket = null;
+public record OrderDTO(@JsonInclude(JsonInclude.Include.NON_NULL) String token, TicketDTO ticket) {
+    public OrderDTO(@JsonProperty("ticket") TicketDTO ticket) {
+        this(UUID.randomUUID().toString(), ticket);
     }
 
-    public OrderDTO(@JsonProperty("column") TokenDTO token, @JsonProperty("column") TicketDTO ticket) {
+    public OrderDTO(@JsonProperty("token") String token, @JsonProperty("ticket") TicketDTO ticket) {
         this.token = token;
         this.ticket = ticket;
     }
 
-    public TokenDTO getToken() {
+    @Override
+    public String token() {
         return token;
     }
 
-    public TicketDTO getTicket() {
+    @Override
+    public TicketDTO ticket() {
         return ticket;
     }
 }

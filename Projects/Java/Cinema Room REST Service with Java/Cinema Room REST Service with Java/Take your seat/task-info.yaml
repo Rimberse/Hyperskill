@@ -317,7 +317,7 @@ files:
   - name: src/cinema/model/DTOs/errors/ErrorDTO.java
     visible: true
     learner_created: true
-  - name: src/cinema/model/DTOs/SeatResponseDTO.java
+  - name: src/cinema/model/DTOs/AvailableSeatsDTO.java
     visible: true
     text: |
       package cinema.model.DTOs;
@@ -354,12 +354,6 @@ files:
       }
     learner_created: true
   - name: src/cinema/services/BookingService.java
-    visible: true
-    learner_created: true
-  - name: src/cinema/model/repository/interfaces/TicketRepository.java
-    visible: true
-    learner_created: true
-  - name: src/cinema/model/repository/TicketRepositoryImpl.java
     visible: true
     learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13376#comment

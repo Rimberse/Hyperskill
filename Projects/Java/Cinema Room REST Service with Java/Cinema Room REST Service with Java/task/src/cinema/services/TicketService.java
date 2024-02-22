@@ -2,7 +2,6 @@ package cinema.services;
 
 import cinema.model.DTOs.OrderDTO;
 import cinema.model.DTOs.TicketDTO;
-import cinema.model.DTOs.TokenDTO;
 import cinema.model.repository.interfaces.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +30,7 @@ public class TicketService {
             TicketDTO selectedSeat = ticketRepository.findBySeatRowAndSeatColumn(row, column).orElse(null);
 
             if (selectedSeat != null && !selectedSeat.isBooked()) {
-                TokenDTO token = new TokenDTO();
-                OrderDTO order = new OrderDTO(token, selectedSeat);
+                OrderDTO order = new OrderDTO(selectedSeat);
                 selectedSeat.setBooked(true);
                 ticketRepository.save(order);
                 return order;
@@ -44,12 +42,12 @@ public class TicketService {
         }
     }
 
-    public OrderDTO refundTicket(TokenDTO token) {
+    public OrderDTO refundTicket(String token) {
         OrderDTO order = ticketRepository.findByToken(token).orElse(null);
 
         if (order != null) {
             ticketRepository.delete(token);
-            TicketDTO ticket = order.getTicket();
+            TicketDTO ticket = order.ticket();
             ticket.setBooked(false);
             return new OrderDTO(null, ticket);
         } else {

@@ -2,7 +2,6 @@ package cinema.model.repository;
 
 import cinema.model.DTOs.OrderDTO;
 import cinema.model.DTOs.TicketDTO;
-import cinema.model.DTOs.TokenDTO;
 import cinema.model.repository.interfaces.TicketRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Repository
 public class TicketRepositoryImpl implements TicketRepository {
     private List<TicketDTO> tickets;
-    private Map<TokenDTO, OrderDTO> orders;
+    private Map<String, OrderDTO> orders;
 
     public TicketRepositoryImpl() {
         tickets = new ArrayList<>();
@@ -42,17 +41,17 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
-    public Optional<OrderDTO> findByToken(TokenDTO token) {
+    public Optional<OrderDTO> findByToken(String token) {
         return Optional.ofNullable(orders.getOrDefault(token, null));
     }
 
     @Override
     public void save(OrderDTO order) {
-        orders.putIfAbsent(order.getToken(), order);
+        orders.putIfAbsent(order.token(), order);
     }
 
     @Override
-    public void delete(TokenDTO token) {
+    public void delete(String token) {
         orders.remove(token);
     }
 }

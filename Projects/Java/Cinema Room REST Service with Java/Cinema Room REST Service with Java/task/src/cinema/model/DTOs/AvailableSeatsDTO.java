@@ -2,12 +2,12 @@ package cinema.model.DTOs;
 
 import java.util.List;
 
-public class SeatResponseDTO {
+public class AvailableSeatsDTO {
     private int rows;
     private int columns;
     private List<TicketDTO> seats;
 
-    public SeatResponseDTO(List<TicketDTO> seats) {
+    public AvailableSeatsDTO(List<TicketDTO> seats) {
         this.rows = 9;
         this.columns = 9;
         this.seats = seats;

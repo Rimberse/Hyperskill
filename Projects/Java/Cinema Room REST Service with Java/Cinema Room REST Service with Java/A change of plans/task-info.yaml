@@ -444,37 +444,6 @@ files:
           };
       }
     learner_created: false
-  - name: src/cinema/model/DTOs/SeatResponseDTO.java
-    visible: true
-    text: |
-      package cinema.model.DTOs;
-      
-      import java.util.List;
-      
-      public class SeatResponseDTO {
-          private int rows;
-          private int columns;
-          private List<SeatDTO> seats;
-      
-          public SeatResponseDTO(List<SeatDTO> seats) {
-              this.rows = 9;
-              this.columns = 9;
-              this.seats = seats;
-          }
-      
-          public int getRows() {
-              return rows;
-          }
-      
-          public int getColumns() {
-              return columns;
-          }
-      
-          public List<SeatDTO> getSeats() {
-              return seats;
-          }
-      }
-    learner_created: true
   - name: src/cinema/model/DTOs/errors/ErrorDTO.java
     visible: true
     text: |
@@ -542,9 +511,6 @@ files:
               return price;
           }
       }
-    learner_created: true
-  - name: src/cinema/model/DTOs/TokenDTO.java
-    visible: true
     learner_created: true
   - name: src/cinema/model/repository/interfaces/TicketRepository.java
     visible: true
@@ -704,6 +670,40 @@ files:
               }
           }
       }
+    learner_created: true
+  - name: src/cinema/model/DTOs/AvailableSeatsDTO.java
+    visible: true
+    text: |
+      package cinema.model.DTOs;
+      
+      import java.util.List;
+      
+      public class SeatResponseDTO {
+          private int rows;
+          private int columns;
+          private List<SeatDTO> seats;
+      
+          public SeatResponseDTO(List<SeatDTO> seats) {
+              this.rows = 9;
+              this.columns = 9;
+              this.seats = seats;
+          }
+      
+          public int getRows() {
+              return rows;
+          }
+      
+          public int getColumns() {
+              return columns;
+          }
+      
+          public List<SeatDTO> getSeats() {
+              return seats;
+          }
+      }
+    learner_created: true
+  - name: src/cinema/model/DTOs/TokenDTO.java
+    visible: true
     learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13377#comment
 status: Unchecked

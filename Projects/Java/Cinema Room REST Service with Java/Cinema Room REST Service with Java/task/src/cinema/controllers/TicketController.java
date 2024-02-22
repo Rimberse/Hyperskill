@@ -1,7 +1,7 @@
 package cinema.controllers;
 
 import cinema.model.DTOs.OrderDTO;
-import cinema.model.DTOs.SeatResponseDTO;
+import cinema.model.DTOs.AvailableSeatsDTO;
 import cinema.model.DTOs.TicketDTO;
 import cinema.model.DTOs.TokenDTO;
 import cinema.model.DTOs.errors.ErrorDTO;
@@ -23,9 +23,9 @@ public class TicketController {
     }
 
     @GetMapping("/seats")
-    public ResponseEntity<SeatResponseDTO> getAvailableSeats() {
+    public ResponseEntity<AvailableSeatsDTO> getAvailableSeats() {
         List<TicketDTO> availableSeats = ticketService.getAvailableSeats();
-        SeatResponseDTO seatResponseDTO = new SeatResponseDTO(availableSeats);
+        AvailableSeatsDTO seatResponseDTO = new AvailableSeatsDTO(availableSeats);
         return ResponseEntity.ok(seatResponseDTO);
     }
 
@@ -42,7 +42,7 @@ public class TicketController {
     @PostMapping("/return")
     public ResponseEntity<?> refundTicket(@RequestBody TokenDTO tokenDTO) {
         try {
-            OrderDTO order = ticketService.refundTicket(tokenDTO);
+            OrderDTO order = ticketService.refundTicket(tokenDTO.getToken());
             return ResponseEntity.ok(order);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));
