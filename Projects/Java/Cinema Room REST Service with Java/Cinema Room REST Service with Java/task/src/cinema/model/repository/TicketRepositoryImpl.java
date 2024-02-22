@@ -5,10 +5,7 @@ import cinema.model.DTOs.TicketDTO;
 import cinema.model.repository.interfaces.TicketRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
@@ -17,8 +14,8 @@ public class TicketRepositoryImpl implements TicketRepository {
     private Map<String, OrderDTO> orders;
 
     public TicketRepositoryImpl() {
-        tickets = new ArrayList<>();
-        this.orders = new ConcurrentHashMap<>();
+        tickets = Collections.synchronizedList(new ArrayList<>());
+        orders = new ConcurrentHashMap<>();
 
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
@@ -28,12 +25,12 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
-    public List<TicketDTO> findAll() {
+    public synchronized List<TicketDTO> findAll() {
         return tickets;
     }
 
     @Override
-    public Optional<TicketDTO> findBySeatRowAndSeatColumn(int row, int column) {
+    public synchronized Optional<TicketDTO> findBySeatRowAndSeatColumn(int row, int column) {
         return tickets
                 .stream()
                 .filter(seat -> seat.getRow() == row && seat.getColumn() == column)
@@ -41,17 +38,17 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
-    public Optional<OrderDTO> findByToken(String token) {
+    public synchronized Optional<OrderDTO> findByToken(String token) {
         return Optional.ofNullable(orders.getOrDefault(token, null));
     }
 
     @Override
-    public void save(OrderDTO order) {
+    public synchronized void save(OrderDTO order) {
         orders.putIfAbsent(order.token(), order);
     }
 
     @Override
-    public void delete(String token) {
+    public synchronized void delete(String token) {
         orders.remove(token);
     }
 }

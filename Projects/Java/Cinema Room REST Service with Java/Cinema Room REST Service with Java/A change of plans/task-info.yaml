@@ -444,29 +444,6 @@ files:
           };
       }
     learner_created: false
-  - name: src/cinema/model/DTOs/errors/ErrorDTO.java
-    visible: true
-    text: |
-      package cinema.model.DTOs.errors;
-      
-      import com.fasterxml.jackson.annotation.JsonProperty;
-      
-      public class ErrorDTO {
-          private String error;
-      
-          public ErrorDTO() {
-              this.error = "";
-          }
-      
-          public ErrorDTO(@JsonProperty("error") String error) {
-              this.error = error;
-          }
-      
-          public String getError() {
-              return error;
-          }
-      }
-    learner_created: true
   - name: src/cinema/model/DTOs/OrderDTO.java
     visible: true
     learner_created: true
@@ -705,6 +682,24 @@ files:
   - name: src/cinema/model/DTOs/TokenDTO.java
     visible: true
     learner_created: true
+  - name: src/cinema/model/exceptions/SeatNumberOutOfBoundsException.java
+    visible: true
+    learner_created: true
+  - name: src/cinema/model/exceptions/TicketPurchasedException.java
+    visible: true
+    learner_created: true
+  - name: src/cinema/model/exceptions/WrongTokenException.java
+    visible: true
+    learner_created: true
+  - name: src/cinema/model/errors/ErrorMessage.java
+    visible: true
+    learner_created: true
+  - name: src/cinema/controllers/ExceptionHandlerController.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13377#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Thu, 22 Feb 2024 18:24:44 UTC"
 record: -1

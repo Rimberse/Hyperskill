@@ -4,7 +4,6 @@ import cinema.model.DTOs.OrderDTO;
 import cinema.model.DTOs.AvailableSeatsDTO;
 import cinema.model.DTOs.TicketDTO;
 import cinema.model.DTOs.TokenDTO;
-import cinema.model.DTOs.errors.ErrorDTO;
 import cinema.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,22 +29,14 @@ public class TicketController {
     }
 
     @PostMapping("/purchase")
-    public ResponseEntity<?> purchaseTicket(@RequestBody TicketDTO ticketDTO) {
-        try {
-            OrderDTO order = ticketService.purchaseTicket(ticketDTO);
-            return ResponseEntity.ok(order);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));
-        }
+    public ResponseEntity<OrderDTO> purchaseTicket(@RequestBody TicketDTO ticketDTO) {
+        OrderDTO order = ticketService.purchaseTicket(ticketDTO);
+        return ResponseEntity.ok(order);
     }
 
     @PostMapping("/return")
-    public ResponseEntity<?> refundTicket(@RequestBody TokenDTO tokenDTO) {
-        try {
-            OrderDTO order = ticketService.refundTicket(tokenDTO.getToken());
-            return ResponseEntity.ok(order);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));
-        }
+    public ResponseEntity<OrderDTO> refundTicket(@RequestBody TokenDTO tokenDTO) {
+        OrderDTO order = ticketService.refundTicket(tokenDTO.getToken());
+        return ResponseEntity.ok(order);
     }
 }

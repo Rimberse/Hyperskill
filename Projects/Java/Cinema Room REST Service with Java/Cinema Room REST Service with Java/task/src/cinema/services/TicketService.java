@@ -2,6 +2,9 @@ package cinema.services;
 
 import cinema.model.DTOs.OrderDTO;
 import cinema.model.DTOs.TicketDTO;
+import cinema.model.exceptions.SeatNumberOutOfBoundsException;
+import cinema.model.exceptions.TicketPurchasedException;
+import cinema.model.exceptions.WrongTokenException;
 import cinema.model.repository.interfaces.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,10 +38,10 @@ public class TicketService {
                 ticketRepository.save(order);
                 return order;
             } else {
-                throw new RuntimeException("The ticket has been already purchased!");
+                throw new TicketPurchasedException();
             }
         } else {
-            throw new RuntimeException("The number of a row or a column is out of bounds!");
+            throw new SeatNumberOutOfBoundsException();
         }
     }
 
@@ -51,7 +54,7 @@ public class TicketService {
             ticket.setBooked(false);
             return new OrderDTO(null, ticket);
         } else {
-            throw new RuntimeException("Wrong token!");
+            throw new WrongTokenException();
         }
     }
 
